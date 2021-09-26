@@ -37,8 +37,8 @@ namespace Sorting
                         break;
                     }
                 }
+                inputLine = Console.ReadLine()?.ToLowerInvariant();
             }
-
         }
     }
 }

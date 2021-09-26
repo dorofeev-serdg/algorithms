@@ -6,7 +6,7 @@ namespace Sorting.Environment
 {
     public class TestExecution
     {
-        public bool AreAllTestSetsCorrect<T>(List<TestSet<T>> testSets, ISort sortingAlgorythm)
+        public bool AreAllTestSetsCorrect(List<TestSet<int>> testSets, ISort sortingAlgorythm)
         {
             bool result = true;
             if (testSets == null)

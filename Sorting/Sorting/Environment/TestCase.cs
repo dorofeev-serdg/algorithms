@@ -6,32 +6,32 @@ namespace Sorting.Environment
 {
     public class TestCase
     {
-        private static int[] InputIntLengthes = new[] {10, 100, 1000, 1_000_000, 10_000_000};
+        private static int[] InputIntLengthes = new[] {10, }; // 100, 1000, 1_000_000, 10_000_000};
         public static List<TestSet<int>> GetStandardTestSets()
         {
-            var result = new List<TestSet<int>>()
-            {
-                new TestSet<int>() // empty case
-                {
-                    Input = new List<int>() { },
-                    Output = new List<int>() { }
-                },
-                new TestSet<int>() 
-                {
-                    Input = new List<int>() { 0 },
-                    Output = new List<int>() { 0 }
-                },
-                new TestSet<int>()
-                {
-                    Input = new List<int>() { 1, 0 },
-                    Output = new List<int>() { 0, 1 }
-                },
-                new TestSet<int>()
-                {
-                    Input = new List<int>() { -1, 1, 0 },
-                    Output = new List<int>() { 1, 0, 1 }
-                },
-            };
+            var result = new List<TestSet<int>>();
+            //{
+            //    new TestSet<int>() // empty case
+            //    {
+            //        Input = new List<int>() { },
+            //        Output = new List<int>() { }
+            //    },
+            //    new TestSet<int>() 
+            //    {
+            //        Input = new List<int>() { 0 },
+            //        Output = new List<int>() { 0 }
+            //    },
+            //    new TestSet<int>()
+            //    {
+            //        Input = new List<int>() { 1, 0 },
+            //        Output = new List<int>() { 0, 1 }
+            //    },
+            //    new TestSet<int>()
+            //    {
+            //        Input = new List<int>() { -1, 1, 0 },
+            //        Output = new List<int>() { 1, 0, 1 }
+            //    },
+            //};
 
             result.AddRange(GetStandardRandomTestSetOfLength());
 
