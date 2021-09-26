@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Sorting.Algorithms;
 using Sorting.Environment;
 
@@ -18,8 +20,9 @@ namespace Sorting
             Console.WriteLine($"\t {AllSortKey} - All algorithm testing");
             Console.WriteLine($"Or press {ExitKey} to exit");
             var inputLine = Console.ReadLine()?.ToLowerInvariant();
+            bool shouldBreakBeDone = false;
 
-            while (inputLine != ExitKey.ToLowerInvariant())
+            while (inputLine != ExitKey.ToLowerInvariant() || shouldBreakBeDone)
             {
                 Stopwatch testCasesStopwatch = new Stopwatch();
                 
@@ -33,11 +36,36 @@ namespace Sorting
                 {
                     case (InsertionSortKey):
                     {
-                        (new TestExecution()).AreAllTestSetsCorrect(testCases, new InsertionSort());
+                        var testResults = (new TestExecution()).AreAllTestSetsCorrect(testCases, new InsertionSort());
+
+                        if (!testResults.All(x => x.IsOutputResultValid == true))
+                        {
+                            PrintNotificationAboutInvalidSortResult();
+                            shouldBreakBeDone = true;
+                        }
+                        else
+                        {
+                            PrintExecutionResults(testResults, nameof(InsertionSort));
+                        }
                         break;
                     }
                 }
                 inputLine = Console.ReadLine()?.ToLowerInvariant();
+            }
+        }
+
+        private static void PrintNotificationAboutInvalidSortResult()
+        {
+            Console.WriteLine("The result of a sorting is invalid");
+        }
+
+        private static void PrintExecutionResults(List<TestResult> testResult, string sotringName)
+        {
+            Console.WriteLine($"Execution of a {sotringName} took the following time");
+            Console.WriteLine($"Number of input elements : number of milliseconds");
+            foreach (var result in testResult)
+            {
+                Console.WriteLine($"{result.InputLength}\t:\t{result.ExecutionTimeMs}");
             }
         }
     }

@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Sorting.Algorithms.Interfaces;
 
 namespace Sorting.Environment
 {
     public class TestExecution
     {
-        public bool AreAllTestSetsCorrect(List<TestSet<int>> testSets, ISort sortingAlgorythm)
+        public List<TestResult> AreAllTestSetsCorrect(List<TestSet<int>> testSets, ISort sortingAlgorythm)
         {
-            bool result = true;
             if (testSets == null)
             {
                 throw new ApplicationException($"Input parameter {nameof(testSets)} is NULL");
             }
+
+            var results = new List<TestResult>();
 
             if (sortingAlgorythm == null)
             {
@@ -36,7 +38,15 @@ namespace Sorting.Environment
                     throw new ApplicationException("TestSet->Output is NULL");
                 }
 
+                var currentTestResult = new TestResult(testSet.Input.Count);
+
+                Stopwatch testSetStopwatch = new Stopwatch();
+                testSetStopwatch.Start();
+                
                 var sortedCollection = sortingAlgorythm.Sort(testSet.Input);
+
+                testSetStopwatch.Stop();
+                currentTestResult.ExecutionTimeMs = testSetStopwatch.ElapsedMilliseconds;
 
                 if (sortedCollection == null)
                 {
@@ -45,18 +55,19 @@ namespace Sorting.Environment
 
                 if (sortedCollection.Count != testSet.Output.Count)
                 {
-                    result = false;
+                    currentTestResult.IsOutputResultValid = false;
                     break;
                 }
 
                 for (int i = 0; i < testSet.Output.Count; i++)
                 {
-                    result = result && sortedCollection[i].Equals(testSet.Output[i]);
+                    currentTestResult.IsOutputResultValid = currentTestResult.IsOutputResultValid && sortedCollection[i].Equals(testSet.Output[i]);
                 }
 
+                results.Add(currentTestResult);
             }
 
-            return result;
+            return results;
         }
     }
 }
