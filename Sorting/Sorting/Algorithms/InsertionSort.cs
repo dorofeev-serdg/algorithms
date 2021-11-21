@@ -1,6 +1,5 @@
-﻿using Sorting.Algorithms.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Sorting.Algorithms.Interfaces;
 
 namespace Sorting.Algorithms
 {
@@ -8,25 +7,23 @@ namespace Sorting.Algorithms
     {
         public List<int> Sort(List<int> input)
         {
-            if (input.Count == 1)
-            {
-                return input;
-            }
+            int inputLength = input.Count;
 
-            for (int mainIndex = 0; mainIndex < input.Count - 1; mainIndex++)
+            for (int i = 1; i < inputLength; ++i)
             {
-                for (int innerIndex = mainIndex + 1; innerIndex > 0; innerIndex--)
+                int key = input[i];
+                int j = i - 1;
+
+                while (j >= 0 && input[j] > key)
                 {
-                    if (input[innerIndex - 1] > input[innerIndex])
-                    {
-                        int temp = input[innerIndex - 1];
-                        input[innerIndex - 1] = input[innerIndex];
-                        input[innerIndex] = temp;
-                    }
+                    input[j + 1] = input[j];
+                    j = j - 1;
                 }
+
+                input[j + 1] = key;
             }
 
-            return input.ToList();
+            return input;
         }
     }
 }
